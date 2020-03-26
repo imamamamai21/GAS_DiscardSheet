@@ -39,7 +39,8 @@ var ConfSheet = function() {
       note         : filterData.indexOf('備考'),
       conf         : filterData.indexOf('現物確認'),
       kintoneUpdate: filterData.indexOf('台帳更新'),
-      row          : filterData.indexOf('行数')
+      row          : filterData.indexOf('行数'),
+      mailText     : filterData.indexOf('▼業者確認用メール文([業者確認メール本文を作成]ボタン押下で更新)')
     };
     return this.index;
   }
@@ -180,7 +181,7 @@ ConfSheet.prototype = {
       .replace('{name}', name)
       .replace('{list}', modelInfo. join('\n\n'));
       
-    this.sheet.getRange('R4').setValue(text)
+    this.sheet.getRange(this.getRowKey('mailText') + '4').setValue(text)
   },
   /**
    * 業者引き渡し日を返す
@@ -193,6 +194,8 @@ ConfSheet.prototype = {
 var confSheet = new ConfSheet();
 
 function tesConf() {
+  //var h = confSheet.getRowKey('mailText');
+  //confSheet.editKintoneData();
  // var sheet = SpreadsheetApp.openById(MY_SHEET_ID).getSheetByName('廃棄依頼用(2019.11)');
   confSheet.updateKintoneStatus();
 }
